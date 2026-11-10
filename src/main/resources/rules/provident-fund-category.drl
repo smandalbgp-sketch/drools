@@ -1,0 +1,32 @@
+import com.vd.drools.request.ProvidentFundRequest;
+global com.vd.drools.response.ProvidentFundResponse response;
+
+dialect "mvel"
+
+rule "Finalize provident fund based one to two year experience"
+    when
+        ProvidentFundRequest(experience>=0 && experience<=2)
+    then
+        response.setProvidentCut("5% of basic salary");
+end;
+
+rule "Finalize provident fund based three to four year experience"
+    when
+        ProvidentFundRequest(experience>2 && experience<=4);
+    then
+        response.setProvidentCut("6% of basic salary");
+end;
+
+rule "Finalize provident fund based five to six year experience"
+    when
+        ProvidentFundRequest(experience>4 && experience<=6);
+    then
+        response.setProvidentCut("7% of gross salary");
+end;
+
+rule "Finalize provident fund based more then six year experience"
+    when
+        ProvidentFundRequest(experience>6);
+    then
+        response.setProvidentCut("9% of gross salary");
+end;
